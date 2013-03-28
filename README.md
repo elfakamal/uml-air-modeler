@@ -1,4 +1,4 @@
-uml-air-modeler
+UML AIR Modeler
 ===============
 
 an AIR based UML diagrams modeler

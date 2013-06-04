@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="406" 
+	height="246"
+	backgroundColor="#222222">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.core.UIComponent;
+			import com.greensock.easing.Strong;
+			import com.greensock.TweenMax;
+			
+			import model.UmlModel;
+			
+			import mx.collections.ArrayCollection;
+			
+			import controler.events.UmlEvent;
+			import controler.UmlViewControler;
+			import controler.UmlControler;
+			
+			
+			protected var _arrow					:Sprite		= null;
+			protected var arrowRotationAngle		:Number		= 0;
+			
+			protected var _firstPointHandler		:Canvas		= null;
+			protected var _lastPointHandler			:Canvas		= null;
+			
+			protected var _firstPoint				:Point		= null;
+			protected var _lastPoint				:Point		= null;
+			
+			protected var _link						:Sprite		= null;
+			
+			protected var _isPointHandlerPressed	:Boolean	= false;
+			
+			/**
+			 * 
+			 * 
+			 */
+			protected override function createChildren():void
+			{
+				super.createChildren();
+				
+				_firstPointHandler	= new Canvas();
+				_lastPointHandler	= new Canvas();
+				
+				_firstPointHandler.setStyle("backgroundColor", "#FFFFFF");
+				_lastPointHandler.setStyle("backgroundColor", "#FFFFFF");
+				_firstPointHandler.alpha = .1;
+				_lastPointHandler.alpha = .1;
+				
+				_firstPointHandler.width = 10;
+				_firstPointHandler.height = 10;
+				
+				_lastPointHandler.width = 10;
+				_lastPointHandler.height = 10;
+				
+				_testArea.addChild(_firstPointHandler);
+				_testArea.addChild(_lastPointHandler);
+				
+				_firstPoint			= new Point(20, 20);
+				_lastPoint			= new Point(150, 150);
+				
+				_link				= new Sprite();
+				
+				_testArea.rawChildren.addChild(_link);
+				
+				_firstPointHandler.x = _firstPoint.x - _firstPointHandler.width/2;
+				_firstPointHandler.y = _firstPoint.y - _firstPointHandler.height/2;
+				
+				_lastPointHandler.x = _lastPoint.x - _lastPointHandler.width/2;
+				_lastPointHandler.y = _lastPoint.y - _lastPointHandler.height/2;
+				
+				_arrow = new Sprite();
+				_testArea.rawChildren.addChild(_arrow);
+				
+				initListeners();
+			}
+			
+			protected override function childrenCreated():void
+			{
+				super.childrenCreated();
+				drawArrow();
+			}
+			
+			protected function initListeners():void
+			{
+				_firstPointHandler.addEventListener(MouseEvent.MOUSE_DOWN,	onPointHandlerMouseDown);
+				_lastPointHandler.addEventListener(MouseEvent.MOUSE_DOWN,	onPointHandlerMouseDown);
+			}
+			
+			protected function onPointHandlerMouseDown(e:MouseEvent):void
+			{
+				_isPointHandlerPressed = true;
+				e.target.startDrag();
+				_testArea.addEventListener(MouseEvent.MOUSE_MOVE,	onPointHandlerMouseMove);
+				_testArea.addEventListener(MouseEvent.MOUSE_UP,		onPointHandlerMouseUp);
+			}
+			
+			protected function onPointHandlerMouseMove(e:MouseEvent):void
+			{
+				if (_isPointHandlerPressed)
+				{
+					_firstPoint.x = _firstPointHandler.x + _firstPointHandler.width/2;
+					_firstPoint.y = _firstPointHandler.y + _firstPointHandler.height/2;
+					
+					_lastPoint.x = _lastPointHandler.x + _lastPointHandler.width/2;
+					_lastPoint.y = _lastPointHandler.y + _lastPointHandler.height/2;
+					
+					drawTestLine();
+					rotateArrow(getRotationToFloor(_firstPoint, _lastPoint));
+					
+					_arrow.x = _lastPoint.x;
+					_arrow.y = _lastPoint.y;
+					
+					
+				}
+			}
+			
+			protected function onPointHandlerMouseUp(e:MouseEvent):void
+			{
+				_isPointHandlerPressed = false;
+				e.target.stopDrag();
+				_testArea.removeEventListener(MouseEvent.MOUSE_MOVE,	onPointHandlerMouseMove);
+				_testArea.removeEventListener(MouseEvent.MOUSE_UP,		onPointHandlerMouseUp);
+			}
+			
+			/**
+			 * 
+			 * @param p1
+			 * @param p2
+			 * @return 
+			 * 
+			 */
+			protected function getRotationToFloor(p1:Point, p2:Point):Number
+			{
+				var coteAdjacent	:Number = p2.x - p1.x;
+				var hypotenus		:Number = Point.distance(p1, p2);
+				
+				var cosinus			:Number = coteAdjacent / hypotenus;
+				
+				var rotationAngle	:Number = Math.acos(cosinus) * 180 / Math.PI;
+				
+				var direction:int = 1;
+				if (p1.y > p2.y)
+				{
+					direction = -1;
+				}
+				
+				return rotationAngle * direction;
+			}
+			
+			protected function drawTestLine():void
+			{
+				with (_link.graphics)
+				{
+					clear();
+					lineStyle(0.25, 0xFFFFFF);
+					moveTo(_firstPoint.x, _firstPoint.y);
+					lineTo(_lastPoint.x, _lastPoint.y);
+				}
+			}
+			
+			protected function rotateArrow(angle:Number):void
+			{
+				_arrow.rotation = angle;
+//				TweenMax.to
+//				(
+//					_arrow, 
+//					2, 
+//					{
+//						rotation		: angle, 
+//						ease			: Strong.easeOut, 
+//						onUpdate		: function ():void
+//						{
+//							_rotationTrace.text = String(_arrow.rotation);
+//						}
+//					}
+//				);
+			}
+			
+			protected function drawArrow():void
+			{
+				with (_arrow.graphics)
+				{
+					clear();
+					
+					var coordinateSystem:Point = new Point(0, 0);
+					lineStyle(0.25, 0xFFFFFF, 1, false, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.MITER);
+					beginFill(0x000000, 1);
+					
+					moveTo(coordinateSystem.x - 10, coordinateSystem.y - 5);
+					lineTo(coordinateSystem.x, coordinateSystem.y);
+					lineTo(coordinateSystem.x - 10, coordinateSystem.y + 5);
+					
+					endFill();
+				}
+			}
+			
+			protected override function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				
+				
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox width="386" y="8" height="18" x="10">
+		
+		<mx:HBox width="90%" height="18">
+			
+			<mx:Label 
+				id="title"
+				x="10" 
+				y="10" 
+				color="#FFFFFF"
+				text="Arrow rotation :" 
+				width="108" 
+				fontWeight="bold" 
+				fontAntiAliasType="advanced" />
+			
+			<mx:TextInput id="_rotationTrace" height="18" width="177" />
+			
+			<mx:Button 
+				click="rotateArrow(_arrow.rotation + 10)" 
+				x="294" 
+				y="10" 
+				label="+" 
+				width="18" 
+				paddingBottom="0" 
+				paddingLeft="0" 
+				paddingRight="0" 
+				paddingTop="0" 
+				fontWeight="bold" 
+				fontFamily="Verdana" 
+				height="19"/>
+			
+			<mx:Button 
+				click="rotateArrow(_arrow.rotation - 10)" 
+				x="320" 
+				y="10" 
+				label="-" 
+				width="18" 
+				paddingBottom="0" 
+				paddingLeft="0" 
+				paddingRight="0" 
+				paddingTop="0" 
+				fontWeight="bold" 
+				fontFamily="Verdana" 
+				height="19"/>
+			
+		</mx:HBox>
+		
+		<mx:Canvas id="_arrowPreview" width="33" borderColor="#FFFFFF" />
+		
+	</mx:HBox>
+	<mx:Canvas id="_testArea" x="10" y="36" width="386" height="200" backgroundColor="#444444">
+	</mx:Canvas>
+
+</mx:Canvas>

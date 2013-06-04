@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="360">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import view.newView.associations.UmlViewAssociationEnd;
+			
+			import model.IUmlModelFeature;
+			
+			
+			
+			public static const CHIlD		:String		= "child";
+			public static const ORPHAN		:String		= "orphan";
+			
+			private static const CHOOSE		:String		= "choose";
+			private static const EDIT		:String		= "edit";
+			
+			
+			[Bindable]
+			private var _associationEnd		:UmlViewAssociationEnd	= null;
+			private var _displayMode		:String					= ORPHAN;
+			private var _multiplicityMode	:String					= CHOOSE;
+			private var _multiplicity		:Array					= null;
+			
+			
+			
+			public function setAssociationEnd(associationEnd:UmlViewAssociationEnd):void
+			{
+				_associationEnd = associationEnd;
+				
+				_textInputName.text					= _associationEnd.name;
+				_comboBoxVisibility.selectedItem	= _associationEnd.getVisibility();
+				_comboBoxMultiplicity.selectedItem	= _associationEnd.getMultiplicity();
+				_checkBoxNavigable.selected			= _associationEnd.isNavigable();
+			}
+			
+			public function setDisplayMode(mode:String):void
+			{
+				_displayMode = mode;
+			}
+			
+			private function onComboBoxMultiplicityChange(event:Event):void
+			{
+				if (_comboBoxMultiplicity.selectedItem == "autre...")
+				{
+					_comboBoxMultiplicity.enabled			= false;
+					_comboBoxMultiplicity.visible			= false;
+					_comboBoxMultiplicity.includeInLayout	= false;
+					
+					_hboxAlternativeMultiplicity.enabled			= true;
+					_hboxAlternativeMultiplicity.visible			= true;
+					_hboxAlternativeMultiplicity.includeInLayout	= true;
+					
+					_multiplicityMode = EDIT;
+				}
+			}
+			
+			public function getEndMultiplicity():Array
+			{
+				if (_multiplicityMode == EDIT)
+				{
+					_multiplicity = [_textInputLower.text, _textInputUpper.text];
+				}
+				else if (_multiplicityMode == CHOOSE)
+				{
+					switch (true)
+					{
+						case (_comboBoxMultiplicity.selectedItem == "[0..1]") :
+							_multiplicity = [0, 1];
+						break;
+						case (_comboBoxMultiplicity.selectedItem == "[0..*]") :
+							_multiplicity = [0, "*"];
+						break;
+						case (_comboBoxMultiplicity.selectedItem == "[*]") :
+							_multiplicity = [null, "*"];
+						break;
+						case (_comboBoxMultiplicity.selectedItem == "[1]") :
+							_multiplicity = [1, null];
+						break;
+						case (_comboBoxMultiplicity.selectedItem == "[1..*]") :
+							_multiplicity = [1, "*"];
+						break;
+					}
+				}
+				
+				return _multiplicity;
+			}
+			
+			public function getEndName():String
+			{
+				return _textInputName.text;
+			}
+			
+			public function getEndVisibility():String
+			{
+				return _comboBoxVisibility.selectedItem as String;
+			}
+			
+			public function isNavigable():Boolean
+			{
+				return _checkBoxNavigable.selected;
+			}
+			
+			public function getMode():String
+			{
+				return _displayMode;
+			}
+			
+			private function isOrphanMode():Boolean
+			{
+				return _displayMode == ORPHAN;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%">
+		
+		<mx:HBox width="100%">
+			<mx:Label 
+				text="Name" 
+				width="50%"/>
+			<mx:TextInput
+				id="_textInputName" 
+				height="18" 
+				width="50%" paddingTop="-1" text="test" textAlign="center" themeColor="#FFFFFF" focusAlpha="1" disabledColor="#FFFFFF"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Label 
+				text="Visibility" 
+				width="50%"/>
+			<mx:ComboBox
+				id="_comboBoxVisibility" 
+				height="18" 
+				width="50%">
+				
+				<mx:String></mx:String>
+				<mx:String>public</mx:String>
+				<mx:String>private</mx:String>
+				<mx:String>protected</mx:String>
+				<mx:String>package</mx:String>
+				
+			</mx:ComboBox>
+		</mx:HBox>
+		
+		<mx:HBox 
+			id="_hboxMultiplicity" 
+			width="100%" >
+			
+			<mx:Label 
+				text="Multiplicity" 
+				width="50%"/>
+				
+			<mx:ComboBox 
+				id="_comboBoxMultiplicity" 
+				change="onComboBoxMultiplicityChange(event)" 
+				height="18" 
+				width="50%">
+				
+				<mx:String></mx:String>
+				
+				<mx:String>[0..1]</mx:String>
+				<mx:String>[0..*]</mx:String>
+				<mx:String>[*]</mx:String>
+				<mx:String>[1]</mx:String>
+				<mx:String>[1..*]</mx:String>
+				<mx:String>autre...</mx:String>
+				
+			</mx:ComboBox>
+			
+			<mx:HBox 
+				id="_hboxAlternativeMultiplicity"
+				width="100%"
+				paddingBottom="0"
+				paddingLeft="0"
+				paddingRight="0"
+				paddingTop="0"
+				horizontalGap="1" 
+				enabled="false"
+				visible="false"
+				includeInLayout="false"
+				>
+				
+				<mx:Label text="["/>
+				<mx:TextInput id="_textInputLower" />
+				<mx:Label text=".."/>
+				<mx:TextInput id="_textInputUpper" />
+				<mx:Label text="]"/>
+			</mx:HBox>
+			
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Label 
+				text="Navigable" 
+				width="50%"/>
+			<mx:CheckBox
+				id="_checkBoxNavigable" 
+				width="50%"/>
+		</mx:HBox>
+		
+		
+		<mx:HBox 
+			enabled="{isOrphanMode()}" 
+			visible="{isOrphanMode()}" 
+			includeInLayout="{isOrphanMode()}"
+			width="100%" 
+			horizontalAlign="right" 
+			horizontalGap="2">
+			
+			<mx:Spacer 
+				width="50%" 
+				height="20"
+				enabled="{isOrphanMode()}"
+				visible="{isOrphanMode()}"
+				includeInLayout="{isOrphanMode()}"
+				/>
+			
+			<mx:Button
+				id="_buttonSave" 
+				label="Save" 
+				height="18" 
+				width="25%"
+				enabled="{isOrphanMode()}"
+				visible="{isOrphanMode()}"
+				includeInLayout="{isOrphanMode()}"
+				/>
+			<mx:Button 
+				id="_buttonCancel"
+				label="Cancel" 
+				height="18" 
+				width="25%"
+				enabled="{isOrphanMode()}"
+				visible="{isOrphanMode()}"
+				includeInLayout="{isOrphanMode()}"
+				/>
+		</mx:HBox>
+		
+		
+	</mx:VBox>
+	
+</mx:Canvas>

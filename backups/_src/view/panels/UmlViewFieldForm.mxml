@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="360" 
+	height="{_holder.height + 1}" 
+	backgroundColor="#222222"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off" 
+	borderStyle="none"
+	includeInLayout="true" >
+	
+	<mx:VBox 
+		id="_holder" 
+		x="1" 
+		y="1" 
+		width="359">
+		
+		<mx:HBox width="100%">
+			
+			<mx:Label text="Name" width="30%"/>
+			<mx:TextInput 
+				id="_featureName"
+				height="20" 
+				width="70%" 
+				restrict="[a-z,A-Z,0-9]"
+				includeInLayout="true" 
+				tabIndex="0" 
+				tabChildren="true"/>
+			
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			
+			<mx:Label 
+				text="Visibility" 
+				width="30%"/>
+			
+			<mx:ComboBox 
+					id="_featureVisibilityList" 
+					width="70%" 
+					editable="false" 
+					height="20" 
+					includeInLayout="true" 
+					tabIndex="1" 
+					tabChildren="true">
+				<mx:String>public</mx:String>
+				<mx:String>protected</mx:String>
+				<mx:String>package</mx:String>
+				<mx:String>private</mx:String>
+			</mx:ComboBox>
+			
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Label 
+					text="{(_mode == UmlModel.ATTRIBUTE) ? 'Type' : 'Return Type' }" 
+					width="30%"/>
+			<mx:ComboBox 
+					id="_featureTypeComboBox" 
+					width="70%" 
+					editable="true" 
+					height="20" 
+					includeInLayout="true" 
+					tabIndex="2" 
+					tabChildren="true">
+			</mx:ComboBox>
+		</mx:HBox>
+		
+		<mx:HBox 
+			width="100%" 
+			visible="{_mode == UmlModel.ATTRIBUTE}" 
+			enabled="{_mode == UmlModel.ATTRIBUTE}" 
+			includeInLayout="{_mode == UmlModel.ATTRIBUTE}" >
+			
+			<mx:Label text="Multiplicity" width="30%"/>
+			
+			<mx:HBox
+				id="_featureMultiplicityZone"
+				width="70%" 
+				horizontalGap="0">
+				
+				<mx:DataGrid 
+					id="_featureMultiplicityDataGrid" 
+					width="95%" 
+					height="80" 
+					dataProvider="{_multiplicities}" 
+					
+					allowDragSelection="false"
+					resizableColumns="false"
+					sortableColumns="false"
+					editable="true" 
+					allowMultipleSelection="true"
+					
+					itemClick="onDataGridItemClick()"
+					click="onDataGridClick()">
+					
+					<mx:columns>
+						<mx:DataGridColumn headerText="*" editable="false" width="20" />
+						<mx:DataGridColumn headerText="Lower" dataField="lower"/>
+						<mx:DataGridColumn headerText="Upper" dataField="upper"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
+				<mx:VBox>
+					<mx:Button 
+						id="addMultiplicityButton" 
+						click="onAddMultiplicityRequested(event)" 
+						label="+" 
+						width="18" 
+						paddingBottom="0" 
+						paddingLeft="0" 
+						paddingRight="0" 
+						paddingTop="0" 
+						fontWeight="bold" 
+						fontFamily="Verdana" 
+						height="19"/>
+					
+					<mx:Button 
+						id="deleteMultiplicityButton" 
+						click="onDeleteMultiplicityRequested(event)" 
+						label="-" 
+						width="18" 
+						paddingBottom="0" 
+						paddingLeft="0" 
+						paddingRight="0" 
+						paddingTop="0" 
+						fontWeight="bold" 
+						fontFamily="Verdana" 
+						height="19"/>
+				</mx:VBox>
+				
+			</mx:HBox>
+			
+		</mx:HBox>
+		
+		<mx:HBox 
+			id="_featureDefaultZone"
+			width="100%" 
+			visible="{_mode == UmlModel.ATTRIBUTE}" 
+			enabled="{_mode == UmlModel.ATTRIBUTE}" 
+			includeInLayout="{_mode == UmlModel.ATTRIBUTE}">
+			
+			<mx:Label text="Default" width="30%"/>
+			<mx:TextInput 
+				id="_featureDefault"
+				height="20" 
+				width="70%" 
+				includeInLayout="true"  />
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:CheckBox 
+					id="_featureStatic" label="Static" width="33%" 
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+			
+			<mx:CheckBox 
+					id="_featureFinal" label="Final" width="33%" 
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+			
+			<mx:CheckBox 
+					id="_featureNavigable" label="Navigable" width="33%" 
+					enabled="{_mode == UmlModel.ASSOCIATION_END}" 
+					visible="{_mode == UmlModel.ASSOCIATION_END}" 
+					includeInLayout="{_mode == UmlModel.ASSOCIATION_END}" 
+					click="onNavigableCheckBox(event)" 
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+			
+			<mx:CheckBox 
+					id="_featureDerived" label="Derived" width="33%" 
+					enabled="{_mode == UmlModel.ATTRIBUTE}"
+					visible="{_mode == UmlModel.ATTRIBUTE}"
+					includeInLayout="{_mode == UmlModel.ATTRIBUTE}"
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+			
+			<mx:CheckBox 
+					id="_featureQuery" label="Query" width="33%" 
+					enabled="{_mode == UmlModel.OPERATION}" 
+					visible="{_mode == UmlModel.OPERATION}" 
+					includeInLayout="{_mode == UmlModel.OPERATION}"
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+		</mx:HBox>
+		
+		<mx:HBox 
+			id="buttonsHbox" 
+			width="100%" 
+			height="20">
+			
+			<mx:Spacer width="50%"/>
+			<mx:Button 
+					label="Save" 
+					width="25%" 
+					height="20" 
+					tabChildren="true" 
+					tabIndex="4"
+					click="onSaveClick()"/>
+			
+			<mx:Button 
+					label="Cancel" 
+					width="25%" 
+					height="20" 
+					tabChildren="true" 
+					tabIndex="5"
+					click="onCancelClick()"/>
+		</mx:HBox>
+		
+	</mx:VBox>
+	
+	<mx:Style>
+		
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+			import controler.UmlControler;
+			import controler.events.UmlEvent;
+			import controler.namespaces.model;
+			
+			import flash.events.MouseEvent;
+			
+			import model.UmlModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.utils.StringUtil;
+			
+			import view.newView.UmlViewField;
+			import view.umlView.UmlViewOperation;
+			
+			
+			protected var _feature			:UmlViewField = null;
+			
+			[Bindable]
+			protected var _mode				:String = UmlModel.ATTRIBUTE;
+			
+			[Bindable]
+			protected var _parametersEditor	:UmlViewParametersListEditor = null;
+			
+			[Bindable]
+			protected var _multiplicities	:ArrayCollection	= null;
+			private var _isItemClicked		:Boolean			= false;
+			
+			
+			protected override function createChildren() : void
+			{
+				super.createChildren();
+				
+				importTypes();
+			}
+			
+			private function importTypes():void
+			{
+				var types:Array = UmlModel.getInstance().model::getAllTypeNames();
+				_featureTypeComboBox.dataProvider = types;
+			}
+			
+			/**
+			 * 
+			 * 
+			 */
+			public function setFeature(viewFeature:UmlViewField):void
+			{
+				if (viewFeature != null)
+				{
+					_feature = viewFeature;
+					updateFields();
+				}
+			}
+			
+			protected function updateFields():void
+			{
+				if (_feature != null)
+				{
+					_featureName.text = _feature.name;
+					_featureVisibilityList.selectedItem	= _feature.getVisibility();
+					
+					// ici on met text au lieu de selectedItem 
+					// car il peut y avoir un type qui n'existe 
+					// pas dans la liste.
+					_featureTypeComboBox.selectedItem = _feature.getType();
+					
+					if (_featureTypeComboBox.selectedItem == null)
+					{
+						_featureTypeComboBox.text = _feature.getType();
+					}
+					
+					_featureStatic.selected = _feature.isStatic();
+					
+					if (_feature is UmlViewOperation)
+					{
+						setMode(UmlModel.OPERATION);
+						if (_parametersEditor != null)
+						{
+							_parametersEditor.setParameters(UmlViewOperation(_feature).getParameters());
+						}
+					}
+				}
+			}
+			
+			public function setMode(mode:String):void
+			{
+				switch (true)
+				{
+					case (mode == UmlModel.CONSTANT)	: 
+					case (mode == UmlModel.ATTRIBUTE)	: 
+						_mode = mode;
+						if (_holder.contains(_parametersEditor))
+						{
+							_holder.removeChild(_parametersEditor);
+						}
+						break;
+					case (mode == UmlModel.OPERATION) :
+						_mode = mode;
+						if (_parametersEditor == null)
+						{
+							_parametersEditor = new UmlViewParametersListEditor();
+						}
+						if (!_holder.contains(_parametersEditor))
+						{
+							_holder.addChildAt(_parametersEditor, _holder.getChildIndex(buttonsHbox));
+						}
+						break;
+				}
+			}
+			
+			protected function onDataGridClick():void
+			{
+				if (!_isItemClicked)
+				{
+					deleteMultiplicityButton.enabled			= false;
+					_featureMultiplicityDataGrid.selectedItems	= [];
+				}
+				_isItemClicked = false;
+			}
+			
+			protected function onDataGridItemClick():void
+			{
+				_isItemClicked = true;
+				if (_featureMultiplicityDataGrid.selectedItems.length > 0)
+				{
+					deleteMultiplicityButton.enabled = true;
+				}
+			}
+			
+			protected function onAddMultiplicityRequested(e:MouseEvent):void
+			{
+				if (_multiplicities == null)
+				{
+					_multiplicities = new ArrayCollection();
+				}
+				
+				_multiplicities.addItem
+				(
+					{
+						lower		: "0",
+						upper		: "1"
+					}
+				);
+			}
+			
+			protected function onDeleteMultiplicityRequested(e:MouseEvent):void
+			{
+				var selectedIndices:Array = _featureMultiplicityDataGrid.selectedIndices;
+				
+				// il faut trier le tableau pour ne pas tomber dans le bug 
+				// des indices, une fois un item supprimé les indices 
+				// diminuent, donc il faut commencer la suppression depuis 
+				// la fin du tableau selectedIndices.
+				selectedIndices.sort(Array.DESCENDING);
+				
+				if (selectedIndices.length > 0)
+				{
+					for (var i:uint = 0; i < selectedIndices.length; i++)
+					{
+						_multiplicities.removeItemAt(int(selectedIndices[i]));
+					}
+				}
+				
+				deleteMultiplicityButton.enabled = false;
+			}
+			
+			protected function onSaveClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.VIEW_FIELD_FORM_READY);
+				dispatchEvent(umlEvent);
+			}
+			
+			protected function onCancelClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.UML_ACTION_CANCELED);
+				dispatchEvent(umlEvent);
+			}
+			
+			protected function onNavigableCheckBox(event:MouseEvent):void
+			{
+				if (_featureNavigable.selected)
+				{
+					_featureDefaultZone.enabled = true;
+					_featureDefaultZone.visible = true;
+					_featureDefaultZone.includeInLayout = true;
+					
+					_featureDerived.enabled = true;
+					_featureDerived.visible = true;
+					_featureDerived.includeInLayout = true;
+				}
+				else
+				{
+					_featureDefaultZone.enabled = false;
+					_featureDefaultZone.visible = false;
+					_featureDefaultZone.includeInLayout = false;
+					
+					_featureDerived.enabled = false;
+					_featureDerived.visible = false;
+					_featureDerived.includeInLayout = false;
+				}
+			}
+			
+			public function getNodeId():String
+			{
+				return _feature.uid;
+			}
+			
+			public function getMode():String
+			{
+				return _mode;
+			}
+			
+			public function getName():String
+			{
+				return _featureName.text;
+			}
+			
+			public function getVisibility():String
+			{
+				return String(_featureVisibilityList.selectedItem);
+			}
+			
+			public function getType():String
+			{
+				var type:String = "";
+				
+				type = String(_featureTypeComboBox.selectedItem);
+				
+				if (_featureTypeComboBox.selectedItem == null)
+				{
+					type = StringUtil.trim(_featureTypeComboBox.text);
+				}
+				
+				return type;
+			}
+			
+			public function getMultiplicities():Array
+			{
+				return _multiplicities.toArray();
+			}
+			
+			public function getDefault():String
+			{
+				return _featureDefault.text;
+			}
+			
+			public function isStatic():Boolean
+			{
+				return _featureStatic.selected;
+			}
+			
+			public function isDerived():Boolean
+			{
+				return _featureDerived.selected;
+			}
+			
+			public function isFinal():Boolean
+			{
+				return _featureFinal.selected;
+			}
+			
+			public function isQuery():Boolean
+			{
+				return _featureQuery.selected;
+			}
+			
+			/**
+			 * 
+			 * 
+			 */
+			public function getParameters():Array
+			{
+				var params:Array = UmlControler.getInstance().convertToNodesArray
+					(
+						_parametersEditor.getParameters(), 
+						UmlModel.PARAMETER
+					);
+				
+				// contraintes des specs Uml à la con
+				//				if (getType() != "void")
+				//				{
+				//					var returnParameter:IUmlModelElement = null;
+				//					returnParameter = UmlModelFieldFactory.createParameter
+				//					(
+				//						"returnParameter", 
+				//						UmlModelVisibilityKind.getVisibilityByName(getVisibility()), 
+				//						UmlControler.getInstance().getTypeByName(getType())
+				//					);
+				//				}
+				
+				return params;
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

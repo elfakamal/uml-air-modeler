@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	backgroundColor="#222222" 
+	width="100%"
+	height="{parametersDataGrid.height}">
+	
+	<mx:Script>
+		<![CDATA[
+			import controler.UmlControler;
+			import controler.namespaces.model;
+			
+			import com.greensock.TweenMax;
+			
+			import model.UmlModel;
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.core.Application;
+			import mx.effects.easing.Quintic;
+			
+			[Bindable]
+			protected var _parametersCollection	:ArrayCollection	= null;
+			
+			protected var _easingTime			:Number				= 0.25;
+			protected var _isItemClicked		:Boolean			= false;
+			
+			
+			
+			protected override function createChildren() : void
+			{
+				super.createChildren();
+				
+				
+				importTypes();
+			}
+			
+			private function importTypes():void
+			{
+				var types:Array = UmlModel.getInstance().model::getAllTypeNames();
+				paramTypesComboBox.dataProvider = types;
+			}
+			
+			
+			/**
+			 * 
+			 * 
+			 */
+			protected function onAddParameterClick():void
+			{
+				if (umlParameterName.text != "" && paramTypesComboBox.text != "")
+				{
+					addParameter(umlParameterName.text, paramTypesComboBox.text);
+					hideInputForm();
+				}
+				else
+				{
+					Alert.show
+					(
+						"Vous devez remplir les informations du paramètre", 
+						"Informations erronées", 
+						Alert.OK, 
+						Application.application.getSelectedProjectWorkspace() 
+					);
+				}
+			}
+			
+			protected function onCancelAddParameterClick():void
+			{
+				hideInputForm();
+			}
+			
+			protected function onAddParameterRequested():void
+			{
+				showInputForm();
+			}
+			
+			/**
+			 * 
+			 * 
+			 */
+			protected function onDeleteParameterRequested():void
+			{
+				var selectedIndices:Array = parametersDataGrid.selectedIndices;
+				
+				// il faut trier le tableau pour ne pas tomber dans le bug 
+				// des indices, une fois un item supprimé les indices 
+				// diminuent, donc il faut commencer la suppression depuis 
+				// la fin du tableau selectedIndices.
+				selectedIndices.sort(Array.DESCENDING);
+				
+				if (selectedIndices.length > 0)
+				{
+					for (var i:uint = 0; i < selectedIndices.length; i++)
+					{
+						_parametersCollection.removeItemAt(int(selectedIndices[i]));
+					}
+				}
+				
+				deleteButton.enabled = false;
+			}
+			
+			protected function onDataGridClick():void
+			{
+				if (!_isItemClicked)
+				{
+					deleteButton.enabled				= false;
+					parametersDataGrid.selectedItems	= [];
+				}
+				_isItemClicked = false;
+			}
+			
+			protected function onDataGridItemClick():void
+			{
+				_isItemClicked = true;
+				if (parametersDataGrid.selectedItems.length > 0)
+				{
+					deleteButton.enabled = true;
+				}
+			}
+			
+			protected function showInputForm():void
+			{
+				TweenMax.to
+				(
+					parametersDataGridCanvas, 
+					_easingTime, 
+					{
+						alpha			: 0, 
+						ease			: Quintic.easeOut, 
+						onComplete		: function ():void
+						{
+							parametersInput.visible = true;
+							parametersInput.enabled = true;
+							
+							TweenMax.to
+							(
+								parametersInput, 
+								_easingTime, 
+								{
+									alpha			: 1, 
+									ease			: Quintic.easeOut, 
+									onComplete		: function ():void
+									{
+										swapChildren(parametersDataGridCanvas, parametersInput);
+									}
+								}
+							);
+						}
+					}
+				);
+			}
+			
+			protected function hideInputForm():void
+			{
+				TweenMax.to
+				(
+					parametersInput, 
+					_easingTime, 
+					{
+						alpha			: 0, 
+						ease			: Quintic.easeOut, 
+						onComplete		: function ():void
+						{
+							parametersInput.visible = false;
+							parametersInput.enabled = false;
+							
+							TweenMax.to
+							(
+								parametersDataGridCanvas, 
+								_easingTime, 
+								{
+									alpha			: 1, 
+									ease			: Quintic.easeOut, 
+									onComplete		: function ():void
+									{
+										swapChildren(parametersDataGridCanvas, parametersInput);
+										resetInputForm();
+									}
+								}
+							);
+						}
+					}
+				);
+			}
+			
+			protected function addParameter(name:String, type:String):void
+			{
+				if (_parametersCollection == null)
+				{
+					_parametersCollection = new ArrayCollection();
+				}
+				
+				_parametersCollection.addItem
+				(
+					{
+						id			: UmlControler.getInstance().getNewUniqueIdentifier(),
+						name		: umlParameterName.text,
+						type		: paramTypesComboBox.text
+					}
+				);
+			}
+			
+			protected function resetInputForm():void
+			{
+				umlParameterName.text	= "";
+				paramTypesComboBox.text	= "";
+			}
+			
+			public function setParameters(parameters:Array):void
+			{
+				if (parameters != null)
+				{
+					if (_parametersCollection == null)
+					{
+						_parametersCollection = new ArrayCollection();
+					}
+					
+					_parametersCollection.removeAll();
+					
+					for (var i:uint = 0; i < parameters.length; i++)
+					{
+						var paramXml:XML = XML(parameters[i]);
+						_parametersCollection.addItem
+						(
+							{
+								id			: paramXml.@id, 
+								name		: paramXml.@name, 
+								type		: paramXml.@type 
+							}
+						);
+					}
+				}
+			}
+			public function getParameters():ArrayCollection
+			{
+				return _parametersCollection;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox 
+		id="parametersInput" 
+		x="0" 
+		y="0" 
+		width="100%" 
+		alpha="0" 
+		visible="false" 
+		enabled="false" >
+		
+		<mx:HBox width="100%">
+			
+			<mx:Label text="Name" width="10%" height="18"/>
+			<mx:TextInput id="umlParameterName" width="40%"  height="20"/>
+			
+			<mx:Label text="Type" width="10%" height="18"/>
+			<mx:ComboBox id="paramTypesComboBox" width="40%" editable="true" height="20">
+				<mx:String></mx:String>
+				<mx:String>String</mx:String>
+				<mx:String>int</mx:String>
+				<mx:String>uint</mx:String>
+				<mx:String>Number</mx:String>
+				<mx:String>Boolean</mx:String>
+				<mx:String>Date</mx:String>
+			</mx:ComboBox>
+			
+		</mx:HBox>
+		
+		<mx:HBox width="100%" >
+			<mx:Spacer width="100%"/>
+			<mx:Button 
+					label="Add Parameter" 
+					click="onAddParameterClick()" 
+					height="20"/>
+			<mx:Button 
+					label="Cancel" 
+					click="onCancelAddParameterClick()" 
+					height="20"/>
+		</mx:HBox>
+		
+	</mx:VBox>
+	
+	<mx:Canvas
+			id="parametersDataGridCanvas" 
+			x="0" 
+			y="0" 
+			width="100%" 
+			height="100" >
+		
+		<mx:DataGrid 
+				id="parametersDataGrid" 
+				x="0" 
+				y="0" 
+				width="94%" 
+				height="100" 
+				dataProvider="{_parametersCollection}" 
+				editable="true" 
+				allowMultipleSelection="true" 
+				itemClick="onDataGridItemClick()"
+				click="onDataGridClick()">
+			
+			<mx:columns>
+				<mx:DataGridColumn headerText="identifier" dataField="id" editable="false" visible="false"/>
+				<mx:DataGridColumn headerText="*" editable="false" width="20" />
+				<mx:DataGridColumn headerText="Name" dataField="name"/>
+				<mx:DataGridColumn headerText="Type" dataField="type"/>
+			</mx:columns>
+			
+		</mx:DataGrid>
+		
+		<mx:Button 
+				id="addButton" 
+				click="onAddParameterRequested()" 
+				x="{width - addButton.width}" 
+				y="0" 
+				label="+" 
+				width="18" 
+				paddingBottom="0" 
+				paddingLeft="0" 
+				paddingRight="0" 
+				paddingTop="0" 
+				fontWeight="bold" 
+				fontFamily="Verdana" 
+				height="19"/>
+		
+		<mx:Button 
+				id="deleteButton" 
+				click="onDeleteParameterRequested()" 
+				x="{width - deleteButton.width}" 
+				y="27" 
+				label="-" 
+				width="18" 
+				enabled="false" 
+				paddingBottom="0" 
+				paddingLeft="0" 
+				paddingRight="0" 
+				paddingTop="0" 
+				fontWeight="bold" 
+				fontFamily="Verdana" 
+				height="19"/>
+	</mx:Canvas>
+	
+</mx:Canvas>

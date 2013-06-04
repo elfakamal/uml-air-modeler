@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="creationCompleteHandler(event)">
+	<mx:Script>
+        <![CDATA[
+            import mx.controls.Alert;
+            import mx.events.CloseEvent;
+
+            private var alertCSS:CSSStyleDeclaration;
+
+            private function creationCompleteHandler(event:Event):void{
+                alertCSS = StyleManager.getStyleDeclaration("Alert");
+                Alert.yesLabel = "Oui";
+                Alert.noLabel = "Non";
+            }
+            
+            private function clickHandlerSave(event:Event):void {
+                
+                alertCSS.setStyle("modalTransparencyColor", modalColor.selectedColor);
+                alertCSS.setStyle("modalTransparency", transpSlider.value);
+                alertCSS.setStyle("modalTransparencyBlur", blurSlider.value);
+                alertCSS.setStyle("modalTransparencyDuration", durationSlider.value);
+                var flags:uint = Alert.YES | Alert.NO;
+                Alert.show("Voulez-vous sauvegarder", "Sauver...", flags, this, closeHandler);
+            }
+            private function closeHandler(event:CloseEvent):void{
+                alertCSS.setStyle("modalTransparencyColor", 0xDDDDDD);
+                alertCSS.setStyle("modalTransparency", 0.5);
+                alertCSS.setStyle("modalTransparencyBlur", 3);
+                alertCSS.setStyle("modalTransparencyDuration", 100);
+            }
+			
+			
+			
+			
+			
+			
+			protected var _regExpZeroStar		:RegExp			= /0\.\.\*/;
+			protected var _regExpOneOne			:RegExp			= /1\.\.1/;
+			protected var _regExpOneStar		:RegExp			= /1\.\.\*/;
+			protected var _regExpZeroOne		:RegExp			= /0\.\.1/;
+			protected var _regExpDecimal		:RegExp			= /\d+/;
+			protected var _regExpDecimalStar	:RegExp			= /\d+\.\.\*/;
+			protected var _regExpDecimalDecimal	:RegExp			= /\d+\.\.\d+/;
+			
+			
+			protected var _regExpSplit			:RegExp			= /\s*\.\.\s*/;
+			
+			
+			
+			
+
+			
+			protected function zeroStar_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpZeroStar.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+
+			protected function oneOne_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpOneOne.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+
+			protected function oneStar_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpOneStar.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+
+			protected function zeroOne_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpZeroOne.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+			
+			protected function decimalStar_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpDecimalStar.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+			
+			protected function decimalDecimal_clickHandler(event:MouseEvent):void
+			{
+				var result:Boolean = false;
+				result = _regExpDecimalDecimal.test(strToCheck.text);
+				traceResult.text = result.toString();
+			}
+			
+			protected function spliteMultiplicity():void
+			{
+				var values:Array = null;
+				values = strToCheck.text.split(_regExpSplit);
+				trace(values);
+			}
+			
+			private var _isRestrictChanged:Boolean = false;
+			
+			protected function onTextChange():void
+			{
+				if (!_isRestrictChanged)
+				{
+					strToCheck.restrict = "[0-9]..*";
+					_isRestrictChanged = true;
+				}
+				
+				if (strToCheck.text == "")
+				{
+					strToCheck.restrict = "[0-9]*";
+					_isRestrictChanged = false;
+				}
+			}
+			
+			
+        ]]>
+    </mx:Script>
+	
+	
+    <mx:Panel width="400" height="300" title="Modification Alert Modal"
+        paddingLeft="30" paddingTop="30" paddingRight="30" x="47" y="132">
+        <mx:Label text="modalTransparency"/>
+        <mx:HSlider id="transpSlider" minimum="0" maximum="1" value=".5" snapInterval=".1" width="100%"/>
+        <mx:Label text="modalTransparencyBlur"/>
+        <mx:HSlider id="blurSlider" minimum="0" maximum="5" value="3" snapInterval="1" width="100%"/>
+        <mx:Label text="modalTransparencyColor"/>
+        <mx:ColorPicker id="modalColor" selectedColor="0xDDDDDD"/>
+        <mx:Label text="modalTransparencyDuration"/>
+        <mx:HSlider id="durationSlider" minimum="0" maximum="2000" value="100" snapInterval="100" width="100%"/>
+        <mx:Button label="Afficher une Alert" click="clickHandlerSave(event);"/>
+    </mx:Panel>
+	
+	
+	
+    <mx:VBox x="47" y="24" width="400" height="100" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+        <mx:HBox width="100%" height="50">
+            <mx:TextInput id="strToCheck" restrict="[0-9]*" change="onTextChange()"/>
+            <mx:TextInput id="traceResult"/>
+        </mx:HBox>
+        <mx:HBox width="100%" height="50">
+            <mx:Button label="0..*" click="zeroStar_clickHandler(event)"/>
+            <mx:Button label="1..1" click="oneOne_clickHandler(event)"/>
+            <mx:Button label="1..*" click="oneStar_clickHandler(event)"/>
+            <mx:Button label="0..1" click="zeroOne_clickHandler(event)"/>
+            <mx:Button label="d..*" click="decimalStar_clickHandler(event)"/>
+            <mx:Button label="d..d" click="decimalDecimal_clickHandler(event)"/>
+            <mx:Button label="split" click="spliteMultiplicity()"/>
+        </mx:HBox>
+    </mx:VBox>
+	
+
+</mx:WindowedApplication>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Tree xmlns:mx="http://www.adobe.com/2006/mxml" >
+	
+	<mx:Script>
+		<![CDATA[
+			
+			
+		protected override function updateDisplayList(w:Number, h:Number):void
+		{
+			super.updateDisplayList(w, h);
+			
+			filters = [new GlowFilter(0x555555, .5, 2, 2, 2, 20, true)];
+			
+			// ready to draw!
+			//graphics.clear();
+			
+			// draws the gradient
+			//drawRoundRect(0, 0, w, h, 0, [0xFFFFFF,0xDDDDDD], [1, 1], verticalGradientMatrix(0, 0, w, h), null, null);// [135, 140]);
+			
+		}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Tree>

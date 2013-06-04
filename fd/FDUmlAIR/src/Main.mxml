@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<newUmlAIR:LayoutWindowedApplication 
+	xmlns:newUmlAIR="view.newView.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	layout="absolute" >
+	
+	<mx:Style source="view/newView/css/newLayoutStyle.css" />
+	
+</newUmlAIR:LayoutWindowedApplication >

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="400" 
+	height="286">
+	
+	<mx:Label 
+		id="title"
+		x="0" 
+		y="0" 
+		color="#000000"
+		text=" Add Attribute Form" 
+		width="400" 
+		fontWeight="bold" 
+		fontAntiAliasType="advanced"
+		mouseDown="dragIt(event);"
+		mouseUp="dropIt(event);"
+		mouseMove="onMouseMove(event);" />
+		
+	<mx:Label x="10" y="26" text="Name" width="190" fontWeight="bold" color="#000000"/>
+	<mx:TextInput id="nameFunction" x="208" y="24" width="182"/>
+	
+	<mx:Label  x="10" y="52" text="visibility" width="190" fontWeight="bold" color="#000000"/>
+	<mx:ComboBox id="accessorListFunction" x="208" y="50" width="182" >
+		<mx:String>public</mx:String>
+		<mx:String>protected</mx:String>
+		<mx:String>internal</mx:String>
+		<mx:String>private</mx:String>
+	</mx:ComboBox>
+	
+	<mx:Label x="10" y="80" text="Type" width="190" fontWeight="bold" color="#000000"/>
+	<mx:ComboBox id="typeListFunction" x="208" y="78" width="182" editable="true">
+		<mx:String></mx:String>
+		<mx:String>String</mx:String>
+		<mx:String>int</mx:String>
+		<mx:String>uint</mx:String>
+		<mx:String>Number</mx:String>
+		<mx:String>Boolean</mx:String>
+		<mx:String>Date</mx:String>
+		<mx:String>Array</mx:String>
+		<mx:String>ArrayCollection</mx:String>
+	</mx:ComboBox>
+	
+	
+	<mx:CheckBox id="isMemberFunction" x="10" y="106" label="Is Member" width="182" fontWeight="bold" color="#000000"/>
+	
+	
+	<mx:Canvas id="paramaterInput" x="10" y="162" width="354" height="85" >
+		<mx:VBox width="100%">
+			<mx:HBox width="100%">
+				<mx:Label text="Name" width="10%" height="18"/>
+				<mx:TextInput id="umlParameterName" width="40%" />
+				<mx:Label text="Type" width="10%" height="18"/>
+				<mx:ComboBox id="umlParameterType" width="40%" editable="true" >
+					<mx:String></mx:String>
+					<mx:String>String</mx:String>
+					<mx:String>int</mx:String>
+					<mx:String>uint</mx:String>
+					<mx:String>Number</mx:String>
+					<mx:String>Boolean</mx:String>
+					<mx:String>Date</mx:String>
+					<mx:String>Array</mx:String>
+					<mx:String>ArrayCollection</mx:String>
+				</mx:ComboBox>
+			</mx:HBox>
+			<mx:HBox width="100%" >
+				<mx:Button label="Add Parameter" width="50%" click="onOkAddParameterClick()" />
+				<mx:Button label="Cancel" width="50%" click="onCancelAddParameterClick()" />
+			</mx:HBox>
+		</mx:VBox>
+	</mx:Canvas>
+	
+	<mx:Label x="10" y="136" text="Parameters" width="190" fontWeight="bold" color="#000000"/>
+	<mx:DataGrid id="parametersDataGrid" x="10" y="162" width="354" height="85" dataProvider="{parametersCollection}" editable="true">
+		<mx:columns>
+			<mx:DataGridColumn headerText="identifier" dataField="id" editable="false" visible="false"/>
+			<mx:DataGridColumn headerText="Name" dataField="name"/>
+			<mx:DataGridColumn headerText="Type" dataField="type"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:Button click="onAddParameterClick()" x="372" y="162" label="+" width="18" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" fontWeight="bold" fontFamily="Verdana" height="19"/>
+	<mx:Button click="onDeleteParameterClick()" x="372" y="189" label="-" width="18" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" fontWeight="bold" fontFamily="Verdana" height="19"/>
+	
+	<mx:Button id="addFunctionBtn" x="10" y="255" label="Add Function" width="182" click="onOkClick()"/>
+	<mx:Button id="cancelBtn" x="208" y="255" label="Cancel" width="182" click="onCancelClick()"/>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import model.UmlModel;
+			
+			import controler.UmlViewControler;
+			import controler.events.UmlEvent;
+			import controler.UmlControler;
+			
+			import mx.collections.ArrayCollection;
+			
+			
+			[Bindable]
+			protected var parametersCollection:ArrayCollection = new ArrayCollection();
+			
+			protected var _action:String = "add";
+			
+			public function setFunctionFields(
+									id						:int, 
+									name					:String, 
+									visibility				:String, 
+									type					:String, 
+									isMember				:Boolean, 
+									parameters				:Array=null):void
+			{
+				addFunctionBtn.label				= "Edit Function";
+				
+				nameFunction.text					= name;
+				accessorListFunction.selectedItem	= visibility;
+				typeListFunction.selectedItem		= type;
+				isMemberFunction.selected			= isMember;
+				
+				if (parameters)
+				{
+					parametersCollection.removeAll();
+					
+					for (var i:uint = 0; i < parameters.length; i++)
+					{
+						var paramXml:XML = XML(parameters[i]);
+						parametersCollection.addItem
+						(
+							{
+								id			: paramXml.@id, 
+								name		: paramXml.@name, 
+								type		: paramXml.@type 
+							}
+						);
+					}
+				}
+			}
+			
+			private function showParameterInput():void
+			{
+				parametersDataGrid.visible = false;
+				parametersDataGrid.enabled = false;
+				
+				paramaterInput.enabled = true;
+				paramaterInput.visible = true;
+			}
+			
+			private function hideParemeterInput():void
+			{
+				parametersDataGrid.visible = true;
+				parametersDataGrid.enabled = true;
+				
+				paramaterInput.enabled = false;
+				paramaterInput.visible = false;
+				umlParameterName.text = "";
+				umlParameterType.text = "";
+			}
+			
+			public function onAddParameterClick():void
+			{
+				showParameterInput();
+			}
+			
+			public function onDeleteParameterClick():void
+			{
+				
+			}
+			
+			private function onOkAddParameterClick():void
+			{
+				parametersCollection.addItem
+				(
+					{
+						id			: UmlControler.getInstance().getNewUniqueIdentifier(),
+						name		: umlParameterName.text,
+						type		: umlParameterType.text
+					}
+				);
+				hideParemeterInput();
+			}
+			
+			private function onCancelAddParameterClick():void
+			{
+				hideParemeterInput();
+			}
+			
+			public override function get uid():String
+			{
+				return UmlControler.getInstance().getNewUniqueIdentifier();
+			}
+			
+			public function getParametersArray():Array
+			{
+				return UmlControler.getInstance().convertToNodesArray(parametersCollection, UmlModel.PARAMETER);
+			}
+			
+//			public function getParametersString():String
+//			{
+//				var strParams:String = "";
+//				for (var i:int = 0; i < parametersCollection.length; i++)
+//				{
+//					var param:Object = parametersCollection.getItemAt(i);
+//					strParams += "[id:" + param.id + ", name:" + param.name + ", type:" + param.type + "]"; 
+//				}
+//				return strParams;
+//			}
+			
+			private function onOkClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.VIEW_FUNCTION_READY);
+				dispatchEvent(umlEvent);
+			}
+			
+			private function onCancelClick():void
+			{
+				UmlViewControler.getInstance().hideFunctionForm(this);
+			}
+			
+			private function dragIt(e:MouseEvent):void
+			{
+				this.startDrag();
+			}
+			
+			private function onMouseMove(e:MouseEvent):void
+			{
+				e.updateAfterEvent();
+			}
+			
+			private function dropIt(e:MouseEvent):void
+			{
+				this.stopDrag();
+			}
+			
+			protected override function updateDisplayList(w:Number, h:Number):void
+			{
+				super.updateDisplayList(w, h);
+			
+				// ready to draw!
+				graphics.clear();
+				
+				// draws the gradient
+				drawRoundRect(-1, -1, w + 2, h + 2, 5, [0x000000,0x000000], [1, 1], verticalGradientMatrix(-1, -1, w + 2, h + 2), null, null);
+				drawRoundRect(0, title.height, w, h - title.height, 5, [0xFFFFFF,0xFFFFFF], [1, 1], verticalGradientMatrix(0, title.height, w, h - title.height), null, null);
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

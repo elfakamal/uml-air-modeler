@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" 
+	height="200"
+	backgroundAlpha="0.8"
+	backgroundColor="#000000"
+	>
+	
+	<mx:Button 
+		id="_buttonUndo" 
+		x="55" 
+		y="10" 
+		label="&lt;"
+		click="onButtonUndoClick(event)"/>
+	
+	<mx:Button 
+		id="_buttonRedo" 
+		x="103" 
+		y="10" 
+		label="&gt;"
+		click="onButtonRedoClick(event)"/>
+	
+	<mx:Button 
+		id="_buttonSave" 
+		x="103" 
+		y="10" 
+		label="save"
+		click="onButtonSaveClick(event)"/>
+	
+	<mx:List 
+		id="_listCommand"
+		x="151" 
+		y="10" 
+		width="266" 
+		height="180" />
+	
+	<mx:Script>
+		<![CDATA[
+			import controler.commands.ICommand;
+			import controler.commands.UmlCommandRedoLast;
+			import controler.commands.UmlCommandUndoLast;
+			import controler.commands.UmlCommandUndoRedoAbstract;
+			import controler.namespaces.model;
+			import controler.namespaces.selector;
+			import controler.serialization.XmlController;
+			
+			import model.UmlModel;
+			import model.UmlModelProject;
+			
+			
+			
+			private var _undoCommand	:ICommand	= null;
+			private var _redoCommand	:ICommand	= null;
+			
+			
+			
+			protected override function initializationComplete():void
+			{
+				super.initializationComplete();
+				
+				_undoCommand = new UmlCommandUndoLast();
+				_redoCommand = new UmlCommandRedoLast();
+				
+			}
+			
+			protected function onButtonSaveClick(event:MouseEvent):void
+			{
+				var modelProject:UmlModelProject = null;
+				modelProject = UmlModel.getInstance().selector::getSelectedProject();
+				XmlController.getInstance().saveProject(modelProject);
+			}
+			
+			protected function undo():void
+			{
+				if (_undoCommand != null)
+				{
+					_undoCommand.execute();
+				}
+			}
+			
+			protected function redo():void
+			{
+				if (_redoCommand != null)
+				{
+					_redoCommand.execute();
+				}
+			}
+			
+			protected function onButtonUndoClick(event:MouseEvent):void
+			{
+				undo();
+				
+				_listCommand.dataProvider = UmlCommandUndoRedoAbstract.getUndoHistory();
+			}
+			
+			protected function onButtonRedoClick(event:MouseEvent):void
+			{
+				redo();
+				
+				_listCommand.dataProvider = UmlCommandUndoRedoAbstract.getUndoHistory();
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

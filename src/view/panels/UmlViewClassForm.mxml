@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="360" 
+	height="{_holder.height + 1}" 
+	backgroundColor="#222222"
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off" 
+	borderStyle="none"
+	includeInLayout="true" >
+		
+		<mx:Script>
+		<![CDATA[
+			import controler.events.UmlEvent;
+			
+			import model.UmlModel;
+			
+			import view.umlView.UmlViewClass;
+			
+			protected var _element		:UmlViewClass	= null;
+			protected var _mode			:String			= UmlModel.ATTRIBUTE;
+			
+			
+			protected override function createChildren() : void
+			{
+				super.createChildren();
+			}
+			
+			/**
+			 * 
+			 * 
+			 */
+			public function setNode(viewField:UmlViewClass):void
+			{
+				if (viewField != null)
+				{
+					_element = viewField;
+					updateFields();
+				}
+			}
+			
+			protected function updateFields():void
+			{
+				if (_element != null)
+				{
+					_classifierName.text					= _element.name;
+					_classifierVisibilityList.selectedItem	= _element.getVisibility();
+				}
+			}
+			
+			public function setMode(mode:String):void
+			{
+				switch (true)
+				{
+					case (mode == UmlModel.CLASS) : 
+						
+						_mode = mode;
+						
+					break;
+					
+					case (mode == UmlModel.INTERFACE) : 
+						
+						_mode = mode;
+						
+					break;
+				}
+			}
+			
+			protected function onSaveClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.VIEW_FIELD_FORM_READY);
+				dispatchEvent(umlEvent);
+			}
+			
+			protected function onCancelClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.UML_ACTION_CANCELED);
+				dispatchEvent(umlEvent);
+			}
+			
+			public function getNodeId():String
+			{
+				return _element.uid;
+			}
+			
+			public function getMode():String
+			{
+				return _mode;
+			}
+			
+			public function getName():String
+			{
+				return _classifierName.text;
+			}
+			
+			public function getVisibility():String
+			{
+				return String(_classifierVisibilityList.selectedItem);
+			}
+			
+			public function isAbstract():Boolean
+			{
+				return _classifierAbstract.selected;
+			}
+			
+			public function isFinal():Boolean
+			{
+				return _classifierFinal.selected;
+			}
+
+		]]>
+	</mx:Script>
+		
+		<mx:VBox id="_holder" x="1" y="1" width="359">
+			
+			<mx:HBox width="100%">
+				<mx:Label text="Name" width="50%"/>
+				<mx:TextInput 
+						id="_classifierName"
+						height="20" 
+						width="49%" 
+						includeInLayout="true" 
+						tabIndex="0" 
+						tabChildren="true"/>
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				
+				<mx:Label text="Visibility" width="50%"/>
+				<mx:ComboBox 
+						id="_classifierVisibilityList" 
+						width="50%" 
+						editable="false" 
+						height="20" includeInLayout="true" tabIndex="1" tabChildren="true">
+					<mx:String>public</mx:String>
+					<mx:String>protected</mx:String>
+					<mx:String>package</mx:String>
+					<mx:String>private</mx:String>
+				</mx:ComboBox>
+				
+			</mx:HBox>
+			
+			<mx:HBox width="100%">
+				<mx:CheckBox 
+					id="_classifierAbstract" label="Abstract" width="50%" 
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+				
+				<mx:CheckBox 
+					id="_classifierFinal" label="Final" width="50%" 
+					fontWeight="bold" tabIndex="3" tabChildren="true"/>
+			</mx:HBox>
+			
+			<mx:HBox id="buttonsHbox" width="100%" height="20">
+				<mx:Spacer width="50%"/>
+				<mx:Button 
+						label="Save" 
+						width="25%" 
+						height="20" 
+						tabChildren="true" 
+						tabIndex="4"
+						click="onSaveClick()"/>
+				<mx:Button 
+						label="Cancel" 
+						width="25%" 
+						height="20" 
+						tabChildren="true" 
+						tabIndex="5"
+						click="onCancelClick()"/>
+			</mx:HBox>
+			
+		</mx:VBox>
+
+</mx:Canvas>

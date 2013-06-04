@@ -1,0 +1,14 @@
+/* CSS file */
+
+
+UmlViewToolBar 
+{
+	borderStyle				: solid;
+	borderColor				: #FFFFFF;
+	borderAlpha				: 1;
+	borderThickness			: 1;
+	cornerRadius			: 2;
+	backgroundAlpha			: 0.8;
+	backgroundColor			: #000000;
+	dropShadowEnabled		: false;
+}

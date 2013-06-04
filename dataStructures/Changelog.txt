@@ -1,0 +1,228 @@
+= Version 1.04 - 2008.07.11 =
+
+Modified:
+
+ * Array2 constructor, resize() - constrained minimum size to a 1x1 matrix.
+ * Array3 constructor, resize() - constrained minimum size to a 1x1 matrix.
+
+Added:
+
+ * Array3.setCol()
+ * Array3.setRow()
+ * Array3.getPile()
+ * Array3.setPile() 
+
+Fixed:
+
+ * Array3.getRow()
+ * Array3.dump()
+
+_Version 1.03 - 2008.06.15_
+
+Fixed:
+
+ * SLinkedList.merge() - failed to merge empty lists.
+ * DLinkedList.merge() - failed to merge empty lists.
+
+_Version 1.02 - 2008.04.14_ 
+
+Fixed:
+
+ * SLinkedList.merge() - incorrect size after merge
+ * DLinkedList.merge() - incorrect size after merge
+ * PriorityQueue.remove() - removal failed
+ * TreeNode.isRoot()
+ 
+Modified:
+
+ * Array2.fill() - now can be filled with instances of a given class.
+ * Array2 constructor, resize() - constrained minimum size to a 2x2 matrix.
+
+Added:
+
+ * Array2.setRow()
+ * Array2.setCol()
+
+_Version 1.00 - 2008.02.16_
+
+Added:
+
+ * Array3.getLayer() - extracts 2d array
+ * Array3.getCol()   - see Array2 class
+ * Array3.getRow()   - see Array2 class
+
+Modified:
+
+ * Graph: implements Collection interface and supports iterator
+ * Graph: traversals can be terminated by returning false in the callback function.
+ * Graph.breadthFirst(): optimized
+ * Graph.deathFirst(): changed from recursive to iterative implementation (faster + more robust)
+ * Heap: optimized
+
+Fixed:
+
+ * minor code clean-up
+ * documentation
+
+_Version 0.95 - 2008.01.17_
+
+Added:
+
+ * New HashMap class
+ * Set data structure
+ * LinkedStack implements Collection interface 
+ * LinkedQueue implements Collection interface
+
+Modified:
+
+ * minor code clean-up
+ 
+Fixed:
+
+ * sLinkedInsertionSort() - sorting failed
+
+_Version 0.92 - 2008.01.08_
+
+Modified:
+
+ * PriorityQueue.dequeue() - now also returns the front item.
+ * Heap.dequeue()          - now also returns the front item.
+ * Prioritizable           - changed constructor.
+ * PriorityQueue.enqueue() - size check
+ * Heap.enqueue()          - size check
+
+Fixed:
+
+ * PriorityQueue.walkDown()
+
+_Version 0.9 - 2007.11.26_
+
+Fixed:
+
+ * ArrayedStack.isEmpty()
+ * ArrayedStack.pop(), LinkedStack.pop(): now removes AND returns the front item as written in the API.
+ * BinaryTreeNode constructor
+
+Added:
+
+ * ArrayedQueue.back(), LinkedQueue.back(): returns a reference to the last (most recent) item in the queue.
+                                            although this violates the concept of a queue, it can be useful in some situations.
+
+ * SLinkedList.join()    - joins list by delimiter
+ * SLinkedList.reverse() - reverse order in place
+ * SLinkedList.sort()    - sort list using merge or insertion sort
+ * SLinkedList.merge()   - merge multiple lists
+ * SLinkedList.concat()  - merge multiple lists
+ * SLinkedList.nodeOf()  - finds node
+ * SLinkedList.splice()  - same as Array.splice
+
+ * DLinkedList.join()       - joins list by delimiter
+ * DLinkedList.reverse()    - reverse order in place
+ * DLinkedList.sort()       - sort list using merge or insertion sort
+ * DLinkedList.merge()      - merge multiple lists
+ * DLinkedList.concat()     - merge multiple lists
+ * DLinkedList.nodeOf()     - finds node
+ * DLinkedList.lasNodeOf()  - finds node
+ * DLinkedList.splice()     - same as Array.splice
+
+Modified:
+
+ * SLinkedList.constructor: accepts initial values to add.
+ * DLinkedList.constructor: accepts initial values to add.
+
+ * SLinkedList.removeHead(): now returns the data of the removed node.
+ * DLinkedList.removeHead(): now returns the data of the removed node.
+
+ * SLinkedList.removeTail(): now returns the data of the removed node.
+ * DLinkedList.removeTail(): now returns the data of the removed node.
+
+ * SLinkedList.append(): now accepts multiple values
+ * DLinkedList.append(): now accepts multiple values
+
+ * SLinkedList.prepend(): now accepts multiple values
+ * DLinkedList.prepend(): now accepts multiple values
+
+ * SLinkedList.remove(): optimized
+ * DLinkedList.remove(): optimized
+
+ * SLinkedList.insertAfter(): optimized
+ * DLinkedList.insertAfter(): optimized
+
+ * SlistIterator.remove(): now returns true if operation succeeded
+ * DListIterator.remove(): now returns true if operation succeeded
+
+ * Graph.breadthFirst(): optimized.
+ * GraphArc.addArc(): optimized.
+
+_Version 0.7.9 - 2007.09.12_
+
+Fixed:
+
+ * Heap.toArray() and PriorityQueue.toArray(): last element was missing
+ * HashTable: member 'key' in internal HashEntry class now untyped.
+ * PriorityQueue.isEmpty() always returned false.
+
+Added:
+
+ * Heap.dump()
+ * PriorityQueue.dump()
+ * DLinkedList.shiftUp()  - removes and appends the head node to the tail.
+ * DLinkedList.popDown()  - removes and prepends the tail node to the head.
+ * SLinkedList.shiftUp()  - removes and appends the head node to the tail.
+ * SLinkedList.popDown()  - removes and prepends the tail node to the head.
+ * TreeNode.isRoot()      - checks if the tree node is a root node.
+ * TreeNode.isLeaf()      - checks if the tree node is a leaf node.
+ * TreeNode.hasChildren() - checks if the tree node has child nodes.
+ * TreeNode.hasSiblings() - checks if the tree node has siblings.
+
+Modified:
+
+ * ArrayedQueue constructor: now directly input the size of the queue, not the shift
+   to make it more accesible. e.g. instead of 4, 5, 8, 10..now enter 32, 256, 1024.. 
+
+_Version 0.7.6 - 2007.06.1_
+
+ Added:
+
+ * HashMap class
+ * Collection.isEmpty()
+
+_Version 0.7.5 - 2007.06.12_
+
+ Fixed:
+
+ * Graph, GraphNode, GraphArc several bugfixes
+ * LinkedStack.peek(): now returns null if stack empty
+ * ArrayedStack.peek(), dequeue(): now returns null if queue empty
+
+ Added:
+
+ * ArrayedQueue.dispose() function
+ * maxSize property for all non-resizable structures, namely:
+   ArrayedQueue, ArrayedStack, Graph, HashTable, Heap and PriorityQueue
+
+_Version 0.7.3 - 2007.05.15_
+
+ Fixed:
+
+  * DListIterator.hasNext(): not iterating over all elements.
+  * SListIterator.hasNext(): not iterating over all elements.
+  * DListIterator.next() function returns null if next element does not exist.
+  * SListIterator.next() function returns null if next element does not exist.
+  * TreeIterator minor bugs.
+
+ Modified:
+
+  * Simplified some TreeIterator functions, namely
+    appendChild(), prependChild(), insertBeforeChild() and insertAfterChild():
+
+ Added:
+
+  * TreeIterator now implements the Iterator interface
+  * TreeNode now implements the Collection interface
+  * TreeNode numChildrens property
+  * TreeNode numSiblings property
+
+_Version 0.7.0 - 2007.05.05_
+
+ * Initial release.

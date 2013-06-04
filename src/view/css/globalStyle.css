@@ -1,0 +1,57 @@
+/* CSS file */
+
+Button {
+   cornerRadius: 3;
+   paddingLeft: 5;
+   paddingRight: 5;
+   fillAlphas: 0.6, 0.31, 0.75, 0.65;
+   fillColors: #333333, #333333, #666666, #666666;
+   color: #ffffff;
+   textRollOverColor: #ffffff;
+   borderColor: #666666;
+   themeColor: #666666;
+   fontSize: 10;
+}
+
+CheckBox {
+   highlightAlphas: 0.33, 0;
+   fillAlphas: 0.27, 0.39, 0.52, 0.65;
+   fillColors: #ffffff, #333333, #ffffff, #eeeeee;
+   borderColor: #666666;
+   iconColor: #333333;
+   themeColor: #666666;
+   fontSize: 10;
+}
+
+ComboBox {
+   cornerRadius: 0;
+   borderColor: #b7babc;
+   highlightAlphas: 0, 0;
+   fillColors: #333333, #333333, #999999, #999999;
+   arrowButtonWidth: 17;
+   backgroundAlpha: 0;
+   useRollOver: false;
+   themeColor: #666666;
+   fontSize: 10;
+   fontWeight: normal;
+   dropdownStyleName: "myComboBoxDropDowns";
+}
+
+.myComboBoxDropDowns {
+   cornerRadius: 0;
+   borderThickness: 0;
+   fontSize: 10;
+   dropShadowEnabled: false;
+}
+
+TextInput {
+   borderStyle: solid;
+   borderColor: #666666;
+   borderThickness: 1;
+   cornerRadius: 3;
+   backgroundAlpha: 1;
+   backgroundColor: #333333;
+   color: #ffffff;
+   fontSize: 10;
+   dropShadowEnabled: false;
+}

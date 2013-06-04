@@ -1,0 +1,14 @@
+‰u<umlProject id="3BA2A8A7-0271-04BB-405E-75804BBAF823" name="projet 1" location="/home/dezolo/">
+  <umlModel/>
+  <umlDiagrams>
+    <umlClassDiagram id="DF934613-CBD8-D059-8FD4-758056B72FBF" name="diagram 1">
+      <umlClasses>
+        <umlClass id="2DCFFAEF-61EC-7461-DAD7-75805B1A1872" name="NewClass" visibility="public"/>
+        <umlClass id="ACBF445E-EF96-6521-A351-758066796025" name="NewClass" visibility="public"/>
+      </umlClasses>
+      <umlAssociations>
+        <umlAssociation id="577E834F-ECA2-5EE9-07C9-758066FB6377" name="NewAssociation"/>
+      </umlAssociations>
+    </umlClassDiagram>
+  </umlDiagrams>
+</umlProject>

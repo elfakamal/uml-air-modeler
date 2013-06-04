@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="166">
+	
+	<mx:Label 
+		id="title"
+		x="0" 
+		y="0" 
+		color="#FFFFFF"
+		text=" Add Attribute Form" 
+		width="400" 
+		fontWeight="bold" 
+		fontAntiAliasType="advanced"
+		mouseDown="dragIt(event);"
+		mouseUp="dropIt(event);"
+		mouseMove="onMouseMove(event);" />
+	
+	<!-- name -->
+	<mx:Label x="10" y="26" text="Name" width="190" fontWeight="bold"/>
+	<mx:TextInput id="nameAttribute" x="208" y="24" width="182" />
+	
+	<!--visibility-->
+	<mx:Label x="10" y="52" text="visibility" width="190" fontWeight="bold"/>
+	<mx:ComboBox id="accessorListAttribute" x="208" y="50" width="182">
+		<mx:String>public</mx:String>
+		<mx:String>protected</mx:String>
+		<mx:String>internal</mx:String>
+		<mx:String>private</mx:String>
+	</mx:ComboBox>
+	
+	<!--type-->
+	<mx:Label x="10" y="80" text="Type" width="190" fontWeight="bold"/>
+	<mx:ComboBox id="typeListAttribute" x="208" y="78" width="182" editable="true">
+		<mx:String></mx:String>
+		<mx:String>String</mx:String>
+		<mx:String>int</mx:String>
+		<mx:String>uint</mx:String>
+		<mx:String>Number</mx:String>
+		<mx:String>Boolean</mx:String>
+		<mx:String>Date</mx:String>
+		<mx:String>Array</mx:String>
+		<mx:String>ArrayCollection</mx:String>
+	</mx:ComboBox>
+	
+	<!--s'il est une ocnstante-->
+	<!--mx:CheckBox id="isConstantAttribute" x="208" y="106" label="Is Constant" width="182" fontWeight="bold" click="onIsConstantClick()" /-->
+	
+	<!--s'il est static ou membre-->
+	<mx:CheckBox id="isMemberAttribute" x="10" y="106" label="Is Member" width="182" fontWeight="bold"/>
+	
+	<!--boutons-->
+	<mx:Button id="addAttribute" x="10" y="136" label="Add Attribute" width="182" click="onOkClick()"/>
+	<mx:Button id="cancel" x="208" y="136" label="Cancel" width="182" click="onCancelClick()"/>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import model.UmlModel;
+			
+			import controler.events.UmlEvent;
+			import controler.UmlViewControler;
+			import controler.UmlControler;
+			
+			protected var _action		:String			= "add";
+			protected var _mode			:String			= UmlModel.ATTRIBUTE;
+			
+			
+			public function setMode(value:String):void
+			{
+				_mode = value;
+				if (_mode == UmlModel.ATTRIBUTE)
+				{
+					isMemberAttribute.enabled		= true;
+					addAttribute.label				= "Add Attribute";
+					nameAttribute.restrict			= "a-z,A-Z,0-9";
+				}
+				else
+				{
+					isMemberAttribute.selected		= false;
+					isMemberAttribute.enabled		= false;
+					addAttribute.label				= "Add Constant";
+					nameAttribute.restrict			= "A-Z,0-9";
+				}
+			}
+			
+			public function getMode():String
+			{
+				return _mode;
+			}
+			
+			private function onIsMemberClick():void
+			{
+				if (isMemberAttribute.selected)
+				{
+					setMode(UmlModel.ATTRIBUTE);
+				}
+				else
+				{
+					setMode(UmlModel.CONSTANT);
+				}
+			}
+			
+			public function setAttributeFields(id:String, name:String, visibility:String, type:String, isMember:Boolean):void
+			{
+				_action								= "edit";
+				
+				addAttribute.label					= "Edit Attribute";
+				nameAttribute.text					= name;
+				accessorListAttribute.selectedItem	= visibility;
+				typeListAttribute.selectedItem		= type;
+				isMemberAttribute.selected			= isMember;
+			}
+			
+			public override function get uid():String
+			{
+				return UmlControler.getInstance().getNewUniqueIdentifier();
+			}
+			
+			private function onOkClick():void
+			{
+				var umlEvent:UmlEvent = new UmlEvent(UmlEvent.VIEW_ATTRIBUTE_READY);
+				dispatchEvent(umlEvent);
+			}
+			
+			private function onCancelClick():void
+			{
+				UmlViewControler.getInstance().hideAttributeForm(this);
+				dispatchEvent(new UmlEvent(UmlEvent.UML_ACTION_CANCELED));
+			}
+			
+			private function dragIt(e:MouseEvent):void
+			{
+				this.startDrag();
+			}
+			
+			private function onMouseMove(e:MouseEvent):void
+			{
+				e.updateAfterEvent();
+			}
+
+			
+			private function dropIt(e:MouseEvent):void
+			{
+				this.stopDrag();
+			}
+			
+			protected override function updateDisplayList(w:Number, h:Number):void
+			{
+				super.updateDisplayList(w, h);
+				
+				// ready to draw!
+				graphics.clear();
+				
+				// draws the gradient
+				drawRoundRect(-1, -1, w + 2, h + 2, 5, [0x000000,0x000000], [1, 1], verticalGradientMatrix(-1, -1, w + 2, h + 2), null, null);
+				drawRoundRect(0, title.height, w, h - title.height, 5, [0xFFFFFF,0xFFFFFF], [1, 1], verticalGradientMatrix(0, title.height, w, h - title.height), null, null);
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	
+</mx:Canvas>

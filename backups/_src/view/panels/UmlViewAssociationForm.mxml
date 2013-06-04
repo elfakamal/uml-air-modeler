@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="360">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.controls.Label;
+			import mx.containers.HBox;
+			
+			import view.newView.associations.UmlViewAssociation;
+			
+			
+			private var _viewAssociation:UmlViewAssociation = null;
+			private var _associationEndForms:Array = null;
+			
+			
+			public function setAssociation(viewAssociation:UmlViewAssociation):void
+			{
+				_viewAssociation = viewAssociation;
+				_textInputAssociationName.text = viewAssociation.name;
+			}
+			
+			public function getAssociationEndsForms():Array
+			{
+				return _associationEndForms;
+			}
+			
+			public function getAssociationName():String
+			{
+				return _textInputAssociationName.text;
+			}
+			
+			public function isAssociationDerived():Boolean
+			{
+				return _checkBoxDerived.selected;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox 
+		width="100%"
+		height="100%">
+		
+		<mx:HBox width="100%">
+			<mx:Label
+				width="50%"
+				text="Association Name :"/>
+			
+			<mx:TextInput 
+				width="50%"
+				id="_textInputAssociationName" 
+				fontAntiAliasType="advanced" 
+				fontGridFitType="subpixel" 
+				fontStyle="normal" 
+				fontWeight="normal"/>
+		</mx:HBox>
+		
+		<mx:HBox width="100%">
+			<mx:Label text="Derived :"/>
+			<mx:CheckBox id="_checkBoxDerived" />
+		</mx:HBox>
+		
+		<!--
+		<mx:HBox width="100%">
+			<mx:Label text="Association Ends :"/>
+		</mx:HBox>
+		
+		<mx:VBox 
+			id="_endsHolder"
+			width="100%">
+			
+			
+			
+		</mx:VBox>
+		-->
+		
+		<mx:HBox 
+			width="100%" 
+			horizontalAlign="right" 
+			horizontalGap="2">
+			
+			<mx:Spacer 
+				width="50%" 
+				height="20"
+				/>
+			
+			<mx:Button
+				id="_buttonSave" 
+				label="Save" 
+				height="18" 
+				width="25%"
+				/>
+			<mx:Button 
+				id="_buttonCancel"
+				label="Cancel" 
+				height="18" 
+				width="25%"
+				/>
+		</mx:HBox>
+		
+		
+		
+	</mx:VBox>
+	
+</mx:Canvas>

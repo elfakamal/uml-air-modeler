@@ -1,0 +1,223 @@
+/* CSS file */
+
+/* 
+@font-face
+{
+	src						: url("_fonts/verdana.ttf");
+	fontFamily				: umlVerdana;
+	advancedAntiAliasing	: true;
+	font-size				: 10;
+	font-weight				: normal;
+	font-sharpness			: 0;
+	font-style				: normal;
+	font-anti-alias-type	: advanced;
+	
+}
+*/
+
+ApplicationControlBar
+{
+	borderStyle				: none;
+	borderColor				: #000000;
+	borderAlpha				: 0;
+	borderThickness			: 0;
+	cornerRadius			: 0;
+	backgroundAlpha			: 0.5;
+	backgroundColor			: #000000;
+	dropShadowEnabled		: false;
+}
+
+CheckBox
+{
+	iconColor				: #ffffff;
+}
+
+
+DataGrid
+{
+	headerStyleName				: dataGridHeader;
+	headerHeight				: 20;
+	headerColors				: #222222, #333333;
+	color						: #FFFFFF; 
+	alternatingItemColors		: #555555, #666666;
+	fontAntiAliasType			: advanced;
+	horizontalGridLineColor		: #777777;
+	horizontalGridLines			: true;
+	verticalGridLines			: true;
+	verticalGridLineColor		: #777777; 
+	selectionDuration			: 250;
+	themeColor					: #555555;
+	verticalAlign				: middle;
+}
+
+.dataGridHeader
+{
+	horizontalGap : 0;
+}
+
+
+ComboBox
+{
+	cornerRadius			: 0;
+	paddingLeft				: 0;
+	paddingRight			: 0;
+	dropdownStyleName		: comboBoxDropdown;
+	borderColor				: #000000;
+	iconColor				: #ffffff;
+	color					: #ffffff;
+	fillAlphas				: 1.0, 1.0, 0.6, 0.7;
+	fillColors				: #000000, #222222, #333333, #333333;
+	backgroundAlpha			: 1.0;
+	selectionColor			: #cccccc;
+	textSelectedColor		: #FFFFFF;
+	useRollOver				: false;
+	rollOverColor			: #cccccc;
+	themeColor				: #000000;
+	openDuration			: 250;
+	closeDuration			: 250;
+	fontSize				: 10;
+	textRollOverColor		: #FFFFFF;
+}
+
+Button
+{
+	color					: #FFFFFF;
+	cornerRadius			: 0;
+	themeColor				: #777777;
+	fillAlphas				: 1.0, 1.0, 0.6, 0.7;
+	fillColors				: #000000, #222222, #333333, #333333;
+	paddingTop				: 0;
+	paddingBottom			: 0;
+	textRollOverColor		: #FFFFFF;
+	leading					: 2;
+	borderColor				: #666666;
+}
+
+.umlButton
+{
+	color					: #FFFFFF;
+	cornerRadius			: 0;
+	themeColor				: #777777;
+	fillAlphas				: 1.0, 1.0, 0.6, 0.7;
+	fillColors				: #000000, #222222, #333333, #333333;
+	paddingTop				: 0;
+	paddingBottom			: 0;
+	textRollOverColor		: #FFFFFF;
+	leading					: 2;
+	borderColor				: #666666;
+}
+
+.diagramSelector
+{
+	/* borderStyle				: solid;
+	borderThickness			: 2;
+	borderColor				: #666666;
+	backgroundColor			: #ffffff;
+	backgroundAlpha			: 0;
+	cornerRadius			: 5;
+	dropShadowEnabled		: false; */
+}
+
+.toolBarTitle
+{
+	color					: #FFFFFF;
+	font-weight				: normal;
+	borderStyle				: solid;
+	borderThickness			: 0;
+	borderColor				: #000000;
+	borderAlpha				: 0;
+	backgroundColor			: #333333;
+	backgroundAlpha			: 0.8;
+	cornerRadius			: 1;
+	dropShadowEnabled		: false;
+}
+
+Label
+{
+	
+	color					: #FFFFFF;
+	
+}
+
+VDividedBox
+{
+	vertical-gap			: 2;
+}
+
+.ScrollBar
+{
+	/* thumbSkin: Embed(source="../assets/scrollThumb.png", scaleGridLeft="1", scaleGridTop="10", scaleGridRight="14", scaleGridBottom="43");
+	trackSkin: Embed(source="../assets/scrollTrack2.jpg", scaleGridLeft="1", scaleGridTop="22", scaleGridRight="16", scaleGridBottom="153");    
+	upArrowSkin: Embed(source="../assets/scrollUpArrow2.jpg");
+	downArrowSkin: Embed(source="../assets/scrollDownArrow2.jpg"); */
+}
+
+
+Alert {
+	color					: #FFFFFF; /* #0f3177; */
+	title-style-name		: "alertTitle";
+	button-style-name		: "umlButton";
+	header-height			: 20;
+	border-thickness		: 1;
+ 	drop-shadow-enabled		: false;
+/*	drop-shadow-color		: #d1ddf7; */
+	background-color		: #222222; /* #ffffff; */
+	corner-radius			: 0;
+	border-style			: solid;
+	header-colors			: #333333, #333333; /* #90a4d1, #5970a0; */
+	footer-colors			: #9db6d9, #ffffff;
+	border-color			: #333333; /*#5970a0;*/
+	
+	modalTransparencyColor	: #000000;
+	modalTransparency		: 0.5;
+	modalTransparencyBlur	: 0.0;
+	modalTransparencyDuration	: 500;
+}
+
+TextInput
+{
+	borderStyle				: solid;
+	backgroundColor			: #444444;
+	backgroundDisabledColor	: #444444;
+	color					: #FFFFFF;
+	backgroundSize			: "100%";
+	borderThickness			: 1;
+	borderColor				: #333333;
+	paddingLeft				: 0;
+	paddingRight			: 0;
+	paddingTop				: 0;
+	paddingBottom			: 0;
+	textAlign				: left;
+	focusAlpha				: 0.5;
+	focusThickness			: 0.5;
+}
+
+.alertTitle{
+	font-family				:Verdana;
+	font-size				:10;
+	font-weight				:bold;
+	text-align				:left;
+	color					:#ffffff;
+}
+
+.comboBoxDropdown
+{
+	verticalScrollBarStyleName	: listBaseVerticalScrollBar;
+	borderStyle					: solid;
+	paddingLeft					: 0;
+	paddingRight				: 0;
+	paddingTop					: 0;
+	paddingBottom				: 0;
+	backgroundColor				: #222222;
+	rollOverColor				: #AAAAAA;
+	selectionColor				: #888888;
+	color						: #ffffff;
+	borderColor					: #333333;
+}
+
+.listBaseVerticalScrollBar
+{
+	borderColor: #000000;
+}
+
+

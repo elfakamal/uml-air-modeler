@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/1.0">
+<id>MoveShapes</id>
+<version>0.0</version>
+<filename>MoveShapes</filename>
+<name>MoveShapes</name>
+<description>An application to demonstrate Undo and Redo</description>
+<initialWindow>
+	<content>MoveShapes.swf</content>
+    	<systemChrome>standard</systemChrome>
+	<transparent>false</transparent>
+    	<visible>true</visible>
+	<resizable>true</resizable>
+</initialWindow>
+</application>

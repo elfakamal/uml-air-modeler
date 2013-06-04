@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0">
+   <XMI.header>
+      <XMI.metamodel xmi.name="UML" xmi.version="1.4"/>
+		<XMI.documentation>
+			<XMI.exporter>
+				Embarcadero's Describe
+			</XMI.exporter>
+			<XMI.exporterVersion>
+				6.0
+			</XMI.exporterVersion>
+		</XMI.documentation>
+   </XMI.header>
+
+   <XMI.content>
+   <UML:Profile xmi.id="DCE.2CD04700-F1B2-9AFD-D678-48F79BA327F9" name="Unnamed" isCloned="true" href=".\FlexAssistance.etup#//*[@xmi.id=&apos;DCE.2CD04700-F1B2-9AFD-D678-48F79BA327F9&apos;]" isDirty="false"><UML:Element.ownedElement>
+<UML:Stereotype xmi.id="DCE.01AA02D8-6D6D-FF2A-7041-3286C4B3F465" name="interface" owner="__uri_.\FlexAssistance.etup#//*[@xmi.id=&apos;DCE.2CD04700-F1B2-9AFD-D678-48F79BA327F9&apos;]"/></UML:Element.ownedElement></UML:Profile></XMI.content>
+</XMI>

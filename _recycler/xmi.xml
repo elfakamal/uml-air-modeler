@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE XMI SYSTEM "C:\Users\kamal\.netbeans\6.5\.uml\config\UML_2.0EMBT.dtd"> -->
+
+<XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0"> 
+
+	<XMI.header> 
+		
+		<XMI.metamodel xmi.name="UML" xmi.version="1.4"/> 
+		
+		<XMI.documentation> 
+		
+			<XMI.exporter> Embarcadero's Describe </XMI.exporter> 
+			
+			<XMI.exporterVersion> 6.0 </XMI.exporterVersion> 
+			
+		</XMI.documentation> 
+		
+	</XMI.header>
+	
+	<XMI.content>
+		
+		<UML:Project 
+				xmi.id="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6" 
+				mode="Design" 
+				defaultLanguage="UML" 
+				projVersion="6.1.4.837" 
+				name="tp_xml">
+			
+			<UML:Element.ownedElement>
+			
+				<UML:Class 
+						xmi.id="DCE.D173B239-CAA9-9E29-EAA3-88EDA39849AC" 
+						name="Diplomate" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6" 
+						associationEnd="DCE.F93A0A7F-9090-F22E-013E-D5BC4C8F4102 DCE.CC2D117B-C9A1-1E3F-38C1-2EFA4572EAC5">
+					
+					<UML:Element.presentation></UML:Element.presentation>
+					
+					<UML:Classifier.generalization>
+					
+						<UML:Generalization 
+								xmi.id="DCE.18E57A28-FE0C-37D0-132E-B6AE64FAEA93" 
+								specific="DCE.D173B239-CAA9-9E29-EAA3-88EDA39849AC" 
+								general="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+							
+							<UML:Element.presentation></UML:Element.presentation>
+						
+						</UML:Generalization>
+					
+					</UML:Classifier.generalization>
+					
+				</UML:Class>
+				
+				<UML:Class 
+						xmi.id="DCE.708C9384-2770-C337-8D12-C957484D3B6A" 
+						name="Langue" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6" 
+						associationEnd="DCE.78D390C5-1894-352C-DDFB-DCFEBEDC93B5">
+					
+					<UML:Element.presentation></UML:Element.presentation>
+					
+					<UML:Element.ownedElement>
+						
+						<UML:Attribute 
+								xmi.id="DCE.77CDD30A-8021-82FC-7035-35962C84E63B" 
+								visibility="private" 
+								name="nomLangue" 
+								type="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+								owner="DCE.708C9384-2770-C337-8D12-C957484D3B6A">
+								
+							<UML:Element.presentation></UML:Element.presentation>
+							
+							<UML:TypedElement.multiplicity>
+								<UML:Multiplicity xmi.id="DCE.6982AF02-5BD7-BAE6-30DB-7F7102D061C1"/>
+							</UML:TypedElement.multiplicity>
+							
+							<UML:Attribute.default>
+								
+								<UML:Expression xmi.id="DCE.1DF9FA20-3CCD-5E60-005B-220B08D2B6B6"/>
+							
+							</UML:Attribute.default>
+						
+						</UML:Attribute>
+						
+					</UML:Element.ownedElement>
+					
+				</UML:Class>
+				
+				<UML:Association 
+						xmi.id="DCE.677241AD-8EA1-ECD3-DE75-688A4B48A2B7" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6">
+						
+					<UML:Association.end>
+					
+						<UML:AssociationEnd 
+								xmi.id="DCE.CC2D117B-C9A1-1E3F-38C1-2EFA4572EAC5" 
+								visibility="private" 
+								association="DCE.677241AD-8EA1-ECD3-DE75-688A4B48A2B7" 
+								type="DCE.D173B239-CAA9-9E29-EAA3-88EDA39849AC">
+							
+							<UML:TypedElement.multiplicity>
+								<UML:Multiplicity xmi.id="DCE.904C2E68-8576-A4A7-BF4A-2884B9C6CC31"/>
+							</UML:TypedElement.multiplicity>
+						
+						</UML:AssociationEnd>
+						
+						<UML:AssociationEnd 
+								xmi.id="DCE.78D390C5-1894-352C-DDFB-DCFEBEDC93B5" 
+								visibility="private" 
+								association="DCE.677241AD-8EA1-ECD3-DE75-688A4B48A2B7" 
+								type="DCE.708C9384-2770-C337-8D12-C957484D3B6A">
+								
+							<UML:TypedElement.multiplicity>
+								<UML:Multiplicity xmi.id="DCE.3877F1C8-5CC2-3D5B-1ED3-8C5FB54F678A"/>
+							</UML:TypedElement.multiplicity>
+							
+						</UML:AssociationEnd>
+						
+					</UML:Association.end>
+					
+					<UML:Element.presentation></UML:Element.presentation>
+					
+				</UML:Association>
+				
+				<UML:Class 
+						xmi.id="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F" 
+						name="Personne" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6" 
+						specialization="DCE.18E57A28-FE0C-37D0-132E-B6AE64FAEA93 DCE.E288C61A-04CA-2BB6-656A-01B3DA40A758" 
+						associationEnd="DCE.5DC8B9FD-5535-14B0-0361-EC4B93442E88 DCE.E780A674-4FBC-8F1B-1985-0C90DA452E0B DCE.FD2D88EC-51F9-691E-7655-0CC5993BAF32 DCE.9E35F1B5-150C-B88D-4C07-3B68517336FA DCE.69E88F14-CD36-AB07-9A4B-5DDE92E86751 DCE.CF26FDCA-19DD-3A93-DA09-824092774A18 DCE.66ECF317-FA4F-39C7-8AF5-FB1825982C43 DCE.2881AD0B-A6D7-94CA-E3F6-8F87197E7068 DCE.4ADF269B-7407-B959-B5B7-E9AEDF84A4AB DCE.CEF44DAF-2061-ABCF-1B42-05BF752524D3 DCE.C1ACFADB-B2AE-C06F-3474-74882A278B26" 
+						referencingReference="DCE.7A4BD7E6-3D3E-7DDB-6590-6517D608EE73" 
+						referredReference="DCE.7A4BD7E6-3D3E-7DDB-6590-6517D608EE73">
+						
+					<UML:Element.presentation></UML:Element.presentation>
+					
+					<UML:Classifier.generalization></UML:Classifier.generalization>
+					
+					<UML:Element.ownedElement>
+						
+						<UML:Attribute 
+								xmi.id="DCE.4B626A04-0E9B-DF1F-5B9C-CB319D28335C" 
+								visibility="private" 
+								name="code" 
+								type="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+								owner="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+								
+							<UML:Element.presentation></UML:Element.presentation>
+							
+							<UML:TypedElement.multiplicity>
+								
+								<UML:Multiplicity xmi.id="DCE.6A642ABE-6C03-9A55-3997-BEBD704D6145"/>
+							
+							</UML:TypedElement.multiplicity>
+							
+							<UML:Attribute.default>
+								
+								<UML:Expression xmi.id="DCE.41A181C4-B14B-AB98-8E48-4EA56E860BEA"/>
+								
+							</UML:Attribute.default>
+							
+						</UML:Attribute>
+						
+						<UML:Attribute 
+								xmi.id="DCE.F222D9A8-C75F-1814-D24C-6B02D60DC5D8" 
+								visibility="private" 
+								name="nom" 
+								type="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+								owner="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+								
+							<UML:Element.presentation></UML:Element.presentation>
+							
+							<UML:TypedElement.multiplicity>
+								
+								<UML:Multiplicity xmi.id="DCE.D11677B2-4873-36CF-F250-4D8A64A9FC01"/>
+							
+							</UML:TypedElement.multiplicity>
+							
+							<UML:Attribute.default>
+							
+								<UML:Expression xmi.id="DCE.94FD8B72-1DE3-03BC-8026-78591499FA73"/>
+							
+							</UML:Attribute.default>
+							
+						</UML:Attribute>
+						
+						<UML:Attribute 
+								xmi.id="DCE.95B257D9-C416-E815-200D-1535BD9C28A5" 
+								visibility="private" 
+								name="prenom" 
+								type="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+								owner="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+							
+							<UML:Element.presentation></UML:Element.presentation>
+							
+							<UML:TypedElement.multiplicity>
+								
+								<UML:Multiplicity xmi.id="DCE.2456883B-C24B-EF9A-2033-7A04E9243E1D"/>
+							
+							</UML:TypedElement.multiplicity>
+							
+							<UML:Attribute.default>
+								
+								<UML:Expression xmi.id="DCE.00324635-581C-0BFF-4A85-24BB05138772"/>
+							
+							</UML:Attribute.default>
+						
+						</UML:Attribute>
+						
+						<UML:Reference 
+								xmi.id="DCE.7A4BD7E6-3D3E-7DDB-6590-6517D608EE73" 
+								source="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F" 
+								owner="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F" 
+								target="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F"/>
+								
+					</UML:Element.ownedElement>
+					
+				</UML:Class>
+				
+				<UML:Class 
+						xmi.id="DCE.8E8575AA-816A-9920-4E1D-E1709BE8F731" 
+						name="Secretaire" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6" 
+						specialization="DCE.D6784C6C-51FB-964F-81C3-9A9107CBA1C7">
+					
+					<UML:Element.presentation></UML:Element.presentation>
+					
+					<UML:Classifier.generalization>
+					
+						<UML:Generalization 
+								xmi.id="DCE.E288C61A-04CA-2BB6-656A-01B3DA40A758" 
+								specific="DCE.8E8575AA-816A-9920-4E1D-E1709BE8F731" 
+								general="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+							
+							<UML:Element.presentation></UML:Element.presentation>
+							
+						</UML:Generalization>
+						
+					</UML:Classifier.generalization>
+					
+					<UML:Element.ownedElement>
+						
+						<UML:Attribute 
+								xmi.id="DCE.895ABD49-2613-6E86-D94B-EE645E3506F0" 
+								visibility="private" 
+								name="numeroBureau" 
+								type="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+								owner="DCE.8E8575AA-816A-9920-4E1D-E1709BE8F731">
+							
+							<UML:Element.presentation></UML:Element.presentation>
+							
+							<UML:TypedElement.multiplicity>
+							
+								<UML:Multiplicity xmi.id="DCE.A9E9F938-907E-931A-6B8C-AF6842491426"/>
+								
+							</UML:TypedElement.multiplicity>
+							
+							<UML:Attribute.default>
+							
+								<UML:Expression xmi.id="DCE.BDA50631-E4EB-1079-1D3B-75E72391B7C3"/>
+								
+							</UML:Attribute.default>
+							
+						</UML:Attribute>
+					
+					</UML:Element.ownedElement>
+					
+				</UML:Class>
+				
+				<UML:DataType 
+						xmi.id="DCE.8A70B6B0-46EE-444E-499D-F53F330DB346" 
+						name="int" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6"/>
+						
+				<UML:DataType 
+						xmi.id="DCE.FC61298D-ED88-2F36-9174-8D14876C7D63" 
+						name="String" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6"/>
+				
+				<UML:Association 
+						xmi.id="DCE.53ACC1C1-F224-035A-6851-E2DA4C6A9A03" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6">
+						
+					<UML:Association.end>
+						
+						<UML:AssociationEnd 
+								xmi.id="DCE.2881AD0B-A6D7-94CA-E3F6-8F87197E7068" 
+								visibility="private" 
+								association="DCE.53ACC1C1-F224-035A-6851-E2DA4C6A9A03" 
+								type="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F" 
+								name="enfant">
+								
+							<UML:TypedElement.multiplicity>
+								
+								<UML:Multiplicity xmi.id="DCE.6AB72E63-40CC-1392-20D5-65AC0632E962">
+									
+									<UML:Multiplicity.range>
+										
+										<UML:MultiplicityRange 
+												xmi.id="DCE.9B89DB22-6C10-45DE-49BF-7718424E3AF2" 
+												lower="1" 
+												upper="1"/>
+										
+										<UML:MultiplicityRange 
+												xmi.id="DCE.B0C57576-1084-6594-9FA7-949ABF341CD0" 
+												upper="*"/>
+												
+									</UML:Multiplicity.range>
+									
+								</UML:Multiplicity>
+								
+							</UML:TypedElement.multiplicity>
+							
+						</UML:AssociationEnd>
+						
+						<UML:AssociationEnd 
+								xmi.id="DCE.4ADF269B-7407-B959-B5B7-E9AEDF84A4AB" 
+								visibility="private" 
+								association="DCE.53ACC1C1-F224-035A-6851-E2DA4C6A9A03" 
+								type="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F" 
+								name="mère">
+								
+							<UML:TypedElement.multiplicity>
+								
+								<UML:Multiplicity xmi.id="DCE.DF75B856-0DAF-7B40-474F-3BABB7B25D4E">
+								
+									<UML:Multiplicity.range>
+										
+										<UML:MultiplicityRange 
+												xmi.id="DCE.EAA093D0-943E-A20A-BA61-6CC08E3D7681" 
+												lower="0" 
+												upper="1"/>
+										
+									</UML:Multiplicity.range>
+									
+								</UML:Multiplicity>
+								
+							</UML:TypedElement.multiplicity>
+							
+						</UML:AssociationEnd>
+						
+					</UML:Association.end>
+					
+					<UML:Element.presentation></UML:Element.presentation>
+					
+				</UML:Association>
+				
+				<UML:Association 
+						xmi.id="DCE.42AAA9A0-BF60-BBB7-8554-BF35DBC1EDA6" 
+						owner="DCE.467916B4-2207-8CEA-7473-A43B7FEF89D6">
+						
+					<UML:Association.end>
+					
+						<UML:AssociationEnd 
+								xmi.id="DCE.CEF44DAF-2061-ABCF-1B42-05BF752524D3" 
+								visibility="private" 
+								association="DCE.42AAA9A0-BF60-BBB7-8554-BF35DBC1EDA6" 
+								type="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+							
+							<UML:TypedElement.multiplicity>
+							
+								<UML:Multiplicity xmi.id="DCE.DF69F448-6B87-9F66-E6C7-881C077D2ECD"/>
+								
+							</UML:TypedElement.multiplicity>
+							
+						</UML:AssociationEnd>
+						
+						<UML:AssociationEnd 
+								xmi.id="DCE.C1ACFADB-B2AE-C06F-3474-74882A278B26" 
+								visibility="private" 
+								association="DCE.42AAA9A0-BF60-BBB7-8554-BF35DBC1EDA6" 
+								type="DCE.4A1B61F8-6160-34BC-FC16-ACDB41C04D4F">
+								
+							<UML:TypedElement.multiplicity>
+							
+								<UML:Multiplicity xmi.id="DCE.825C8212-11EC-C4E3-DC5A-B63636726870"/>
+								
+							</UML:TypedElement.multiplicity>
+							
+						</UML:AssociationEnd>
+						
+					</UML:Association.end>
+					
+					<UML:Element.presentation></UML:Element.presentation>
+				
+				</UML:Association>
+				
+			</UML:Element.ownedElement>
+		
+		</UML:Project>
+		
+	</XMI.content>
+	
+</XMI>
